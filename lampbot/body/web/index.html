@@ -22,7 +22,8 @@
   #conn { font-size: 11px; color: var(--muted); }
   .bar { height: 6px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; }
   .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .1s linear; }
-  #cam { visibility: hidden; width: 100%; border-radius: 6px; display: block; background: #000; aspect-ratio: 4/3; object-fit: cover; }
+  /* Mirrored like a selfie view so it moves the same way as the 3D lamp (display only; the brain uses the raw frame). */
+  #cam { visibility: hidden; width: 100%; border-radius: 6px; display: block; background: #000; aspect-ratio: 4/3; object-fit: cover; transform: scaleX(-1); }
   .row { display: grid; grid-template-columns: 72px 1fr 44px; gap: 6px; align-items: center; font-size: 11px; color: var(--muted); }
   .row .num { text-align: right; font-variant-numeric: tabular-nums; }
   #dialog { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }

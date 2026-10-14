@@ -355,6 +355,9 @@ class Character:
                 self.play_music("happy")
                 self._light((1.0, 0.55, 0.8), 1.0, 0.3, 2.0)
                 await self.body.motion(ex.dance(self.aim_q), "dance")
+                if self.music_style == "happy":  # the music belongs to the dance; end them together
+                    self.mixer.stop_channel("music", 1.5)
+                    self.music_style = None
             elif skill == "play_music":
                 self.play_music(target if target in ("chill", "happy", "lullaby") else "chill")
             elif skill == "stop_music":
