@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+assets/
+runs/
+data/
+.env
+lampbot/body/web/vendor/

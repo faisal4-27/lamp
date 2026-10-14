@@ -1,0 +1,13 @@
+[Unit]
+Description=Lamp body (actuator simulation + viewer)
+
+[Service]
+WorkingDirectory=@ROOT@
+ExecStart=@ROOT@/.venv/bin/python -m lampbot.body
+Restart=always
+RestartSec=1
+# The body is the safety layer: give it scheduling priority over the heavy brain.
+CPUWeight=200
+
+[Install]
+WantedBy=default.target

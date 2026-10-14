@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lamp Viewer</title>
+<style>
+  :root {
+    --bg: #15171c; --panel: rgba(24, 27, 34, 0.86); --line: rgba(255,255,255,0.08);
+    --text: #e7e9ee; --muted: #8b93a3; --accent: #ffd27a; --good: #6fd39b; --bad: #ff7b7b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 13px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
+  #scene { position: fixed; inset: 0; }
+  .panel { position: fixed; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; backdrop-filter: blur(6px); padding: 10px 12px; }
+  #left { top: 12px; left: 12px; width: 300px; display: flex; flex-direction: column; gap: 10px; }
+  #right { top: 12px; right: 12px; width: 340px; bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+  h2 { margin: 0 0 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  #state { font-size: 22px; font-weight: 700; letter-spacing: .02em; }
+  #conn { font-size: 11px; color: var(--muted); }
+  .bar { height: 6px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .1s linear; }
+  #cam { visibility: hidden; width: 100%; border-radius: 6px; display: block; background: #000; aspect-ratio: 4/3; object-fit: cover; }
+  .row { display: grid; grid-template-columns: 72px 1fr 44px; gap: 6px; align-items: center; font-size: 11px; color: var(--muted); }
+  .row .num { text-align: right; font-variant-numeric: tabular-nums; }
+  #dialog { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+  .msg { padding: 6px 8px; border-radius: 8px; max-width: 92%; }
+  .msg.user { background: rgba(120,160,255,.16); align-self: flex-end; }
+  .msg.lamp { background: rgba(255,210,122,.14); align-self: flex-start; }
+  .msg.sys { color: var(--muted); font-size: 11px; align-self: center; text-align: center; }
+  #memory { max-height: 30%; overflow-y: auto; }
+  .mem { padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+  .mem b { color: var(--accent); font-weight: 600; }
+  .mem span { color: var(--muted); }
+  #say input { width: 100%; background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 10px; font: inherit; }
+  #metrics { white-space: pre-line;  font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (max-width: 760px) { #right { display: none; } #left { width: calc(100% - 24px); } }
+</style>
+</head>
+<body>
+<div id="scene"></div>
+
+<div id="left" class="panel">
+  <div>
+    <div id="state">—</div>
+    <div id="conn">connecting…</div>
+  </div>
+  <div>
+    <h2>Attention</h2>
+    <div class="bar"><div id="attn"></div></div>
+  </div>
+  <div style="background:#000;border-radius:6px"><img id="cam" alt=""></div>
+  <div>
+    <h2>Joints · gravity load</h2>
+    <div id="joints"></div>
+  </div>
+  <div id="metrics"></div>
+</div>
+
+<div id="right" class="panel">
+  <h2>Scene memory</h2>
+  <div id="memory"><div class="mem"><span>nothing remembered yet</span></div></div>
+  <h2>Conversation</h2>
+  <div id="dialog"></div>
+  <form id="say"><input id="sayText" placeholder="Type to the lamp (instead of speaking)…" autocomplete="off"></form>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "/web/vendor/three.module.js" } }
+</script>
+<script type="module" src="/web/viewer.js"></script>
+</body>
+</html>

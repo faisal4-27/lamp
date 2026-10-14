@@ -1,0 +1,18 @@
+[Unit]
+Description=Lamp brain (senses, character, mind)
+After=lamp-body.service pipewire.service
+Wants=lamp-body.service
+
+[Service]
+WorkingDirectory=@ROOT@
+EnvironmentFile=-@ROOT@/.env
+ExecStart=@ROOT@/.venv/bin/python -m lampbot.brain
+Restart=on-failure
+RestartSec=2
+# Leave headroom on a 4-core / 8 GB laptop.
+MemoryHigh=1500M
+MemoryMax=2G
+CPUQuota=300%
+
+[Install]
+WantedBy=default.target
